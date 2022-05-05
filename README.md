@@ -1,2 +1,2 @@
-# line-bot
-Line-bot backend service.
+# line-chatbot
+    Line-chatbot service with golang.
