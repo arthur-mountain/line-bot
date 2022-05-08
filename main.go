@@ -55,7 +55,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 			case *linebot.StickerMessage:
 				msgHandler.Sticker(message)
-
 			}
 		}
 
