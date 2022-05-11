@@ -59,8 +59,8 @@ func (handler *LineMsgHandler) Audio(message *linebot.StickerMessage) {
 }
 
 /* common usage */
-func (handler *LineMsgHandler) ReplyMessage(client *linebot.Client, replyToken, message string) {
-	_, err := client.ReplyMessage(replyToken, linebot.NewTextMessage(message)).Do()
+func (handler *LineMsgHandler) ReplyMessage(message string) {
+	_, err := handler.client.ReplyMessage(handler.event.ReplyToken, linebot.NewTextMessage(message)).Do()
 
 	if err != nil {
 		fmt.Printf("reply message fail: %v", err.Error())

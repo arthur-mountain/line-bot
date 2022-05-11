@@ -7,12 +7,9 @@ import (
 )
 
 func HandleImage(handler *LineMsgHandler, message *linebot.StickerMessage) error {
-	client := handler.client
-	event := handler.event
-
 	replyMessage := fmt.Sprintf("sticker id is : %s,\n stickerResourceType is : %s", message.StickerID, message.StickerResourceType)
 
-	_, err := client.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do()
+	handler.ReplyMessage(replyMessage)
 
-	return err
+	return nil
 }
