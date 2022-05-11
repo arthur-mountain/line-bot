@@ -3,6 +3,7 @@ package message
 import (
 	"encoding/json"
 	"fmt"
+	"line-chatbot/utils"
 	"os"
 	"path/filepath"
 
@@ -58,38 +59,35 @@ func HandleText(handler *LineMsgHandler, message *linebot.TextMessage) error {
 
 		// create new richmenu
 	case "create":
-		richmenu := linebot.RichMenu{
-			Size:        linebot.RichMenuSize{Width: 2500, Height: 843},
-			Selected:    false,
-			Name:        "NARI RICHMENU",
-			ChatBarText: "NARI",
-			Areas: []linebot.AreaDetail{
-				{
-					Bounds: linebot.RichMenuBounds{X: 0, Y: 0, Width: 833, Height: 843},
-					Action: linebot.RichMenuAction{
-						Type: linebot.RichMenuActionTypeMessage,
-						Text: "set", // Will invoke 'set' keyword to set default richmenu
-					},
-				},
-				{
-					Bounds: linebot.RichMenuBounds{X: 834, Y: 0, Width: 833, Height: 843},
-					Action: linebot.RichMenuAction{
-						Type: linebot.RichMenuActionTypeMessage,
-						Text: "TODO: Wait liff website then change to liff url",
-					},
-				},
-				{
-					Bounds: linebot.RichMenuBounds{X: 1668, Y: 0, Width: 833, Height: 843},
-					Action: linebot.RichMenuAction{
-						Type: linebot.RichMenuActionTypeURI,
-						URI:  "https://zh-hant.reactjs.org/",
-						Text: "React",
-					},
-				},
+		richmenu := utils.RichMenu{}
+		richmenu.SetSize(linebot.RichMenuSize{Width: 2500, Height: 843})
+		richmenu.SetSelected(false)
+		richmenu.SetName("NARI RICHMENU")
+		richmenu.SetChatBarText("NARI")
+		richmenu.SetAreas(linebot.AreaDetail{
+			Bounds: linebot.RichMenuBounds{X: 0, Y: 0, Width: 833, Height: 843},
+			Action: linebot.RichMenuAction{
+				Type: linebot.RichMenuActionTypeMessage,
+				Text: "set", // Will invoke 'set' keyword to set default richmenu
 			},
-		}
+		})
+		richmenu.SetAreas(linebot.AreaDetail{
+			Bounds: linebot.RichMenuBounds{X: 834, Y: 0, Width: 833, Height: 843},
+			Action: linebot.RichMenuAction{
+				Type: linebot.RichMenuActionTypeMessage,
+				Text: "TODO: Wait liff website then change to liff url",
+			},
+		})
+		richmenu.SetAreas(linebot.AreaDetail{
+			Bounds: linebot.RichMenuBounds{X: 1668, Y: 0, Width: 833, Height: 843},
+			Action: linebot.RichMenuAction{
+				Type: linebot.RichMenuActionTypeURI,
+				URI:  "https://zh-hant.reactjs.org/",
+				Text: "React",
+			},
+		})
 
-		if _, err := client.CreateRichMenu(richmenu).Do(); err != nil {
+		if _, err := client.CreateRichMenu(*richmenu.RichMenu).Do(); err != nil {
 			handler.ReplyMessage("create richmenu fail")
 
 			return err
